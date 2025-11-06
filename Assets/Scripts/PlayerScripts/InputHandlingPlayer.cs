@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class InputHandlingPlayer : MonoBehaviour
 {
+    // GameObject Script references
     [SerializeField] private PlayerParentScript _parentScript;
 
     // Input Variables
     internal float x_input_axis;
     internal float y_input_axis;
 
+
     private void Awake()
     {
         if (_parentScript == null) _parentScript = GetComponent<PlayerParentScript>();
 
-    }
+    }// End of Awake
 
     internal void InputAndFlagControll()
     {
@@ -33,7 +35,7 @@ public class InputHandlingPlayer : MonoBehaviour
             Physics2D.IgnoreCollision(_parentScript._playerCollider, _parentScript.currentPlatformCollider, false);
         }
 
+    }// End of InputAndFlagControll
 
-    }
 
-}
+}// End of InputHandlingPlayer class

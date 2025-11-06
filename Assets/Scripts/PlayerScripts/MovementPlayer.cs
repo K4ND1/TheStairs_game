@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class MovementPlayer : MonoBehaviour
 {
+    // GameObject Script references
     [SerializeField] private PlayerParentScript _parentScript;
 
     // Movement Variables
     public float movement_speed = 7f;
 
+
     private void Awake()
     {
         if (_parentScript == null) _parentScript = GetComponent<PlayerParentScript>();
 
-    }
+    }// End of Awake
 
     internal void MovementControll()
     {
@@ -29,9 +31,10 @@ public class MovementPlayer : MonoBehaviour
 
         }
 
-
         // Move the player based on input
         _parentScript._playerRb.velocity = new Vector2(_parentScript._inputScript.x_input_axis * movement_speed, _parentScript._playerRb.velocity.y);
 
-    }
-}
+    }// End of MovementControll
+
+
+}// End of MovementPlayer class

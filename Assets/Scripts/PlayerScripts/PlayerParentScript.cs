@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 public class PlayerParentScript : MonoBehaviour
 {
-    // GameObject Scripts
+    // GameObject Script references
     [SerializeField] internal InputHandlingPlayer _inputScript;
     [SerializeField] internal MovementPlayer _movementScript;
     
@@ -19,16 +19,20 @@ public class PlayerParentScript : MonoBehaviour
 
     private void Awake()
     {
+        // Initialize component references
         if (_inputScript == null) _inputScript = GetComponent<InputHandlingPlayer>();
         if (_movementScript == null) _movementScript = GetComponent<MovementPlayer>();
 
+        // Initialize Rigidbody2D and Collider2D
         _playerRb = GetComponent<Rigidbody2D>();
         _playerCollider = GetComponent<Collider2D>();
-    }
+
+    }// End of Awake
 
     // Loop Methods
     private void Update()
     {
+        // Handle input and flags
         _inputScript.InputAndFlagControll();
 
 
@@ -40,14 +44,15 @@ public class PlayerParentScript : MonoBehaviour
                 currentPlatformCollider = GetCurrentContactColliders()[i];
             }
         }
-        
-    }
+
+    }// End of Update
 
     private void FixedUpdate()
     {
+        // Handle movement
         _movementScript.MovementControll();
 
-    }
+    }// End of FixedUpdate
 
 
     // Trigger and collision methods
@@ -57,7 +62,8 @@ public class PlayerParentScript : MonoBehaviour
         {
             onStairs = true; // Set the flag to indicate the player is on stairs
         }
-    }
+
+    }// End of OnTriggerStay2D
 
     private void OnTriggerExit2D(Collider2D other)
     {
@@ -67,7 +73,8 @@ public class PlayerParentScript : MonoBehaviour
             _playerRb.velocity = new Vector2(_playerRb.velocity.x, 0f);
             onStairs = false;  // Reset the flag when the player exits the stairs
         }
-    }
+
+    }// End of OnTriggerExit2D
 
     public Collider2D[] GetCurrentContactColliders()
     {
@@ -90,9 +97,9 @@ public class PlayerParentScript : MonoBehaviour
             result[i] = contacts[i].collider;
         }
 
-
         return result;
-    }
+
+    }// End of GetCurrentContactColliders
 
     public bool CheckIfNotInPlatform()
     {
@@ -108,6 +115,8 @@ public class PlayerParentScript : MonoBehaviour
         }
 
         return result;
-    }
 
-}
+    }// End of CheckIfNotInPlatform
+
+
+}// End of PlayerParentScript class
