@@ -1,4 +1,5 @@
 # TheStairs_game
-The game is still in progress but i decided that ill be posting my progres along the way, so yeah. Nothing crazy.
+The game is still in progress but I decided that I'll be posting my progres along the way, so yeah. Nothing crazy.
 
-Oh and the scripts that are currently written are messy af, but I'll be cleaning up and spliting them probably later.
+Also important note the whole thing is done in 2020.3.49f1 unity editor version cuz I despise the newer versions <3
+
