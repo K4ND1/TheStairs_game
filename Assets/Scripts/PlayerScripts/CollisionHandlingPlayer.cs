@@ -73,6 +73,15 @@ public class CollisionHandlingPlayer : MonoBehaviour
     }// End of CheckIfNotInPlatform
 
     // Trigger Methods
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Doors"))
+        {
+            _parentScript._gameManager.TakeTriggerInput(other.gameObject.name);        
+        }
+
+    }// End of OnTriggerEnter2D
+
     private void OnTriggerStay2D(Collider2D other)
     {
         if (other.CompareTag("Stairs"))
