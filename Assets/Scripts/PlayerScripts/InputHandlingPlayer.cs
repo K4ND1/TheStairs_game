@@ -25,14 +25,14 @@ public class InputHandlingPlayer : MonoBehaviour
         // Get vertical input
         y_input_axis = Input.GetAxisRaw("Vertical");
 
-        if (_parentScript.currentPlatformCollider != null && y_input_axis < 0)
+        if (_parentScript._currentPlatformCollider != null && y_input_axis < 0)
         {
-            Physics2D.IgnoreCollision(_parentScript._playerCollider, _parentScript.currentPlatformCollider, true);
+            Physics2D.IgnoreCollision(_parentScript._playerCollider, _parentScript._currentPlatformCollider, true);
 
         }
-        else if (_parentScript.currentPlatformCollider != null && _parentScript.CheckIfNotInPlatform())
+        else if (_parentScript._currentPlatformCollider != null && _parentScript._collisionScript.CheckIfNotInPlatform())
         {
-            Physics2D.IgnoreCollision(_parentScript._playerCollider, _parentScript.currentPlatformCollider, false);
+            Physics2D.IgnoreCollision(_parentScript._playerCollider, _parentScript._currentPlatformCollider, false);
         }
 
     }// End of InputAndFlagControll
