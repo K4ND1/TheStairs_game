@@ -16,6 +16,7 @@ public class PlayerParentScript : MonoBehaviour
     internal Rigidbody2D _playerRb;
     internal Collider2D _playerCollider;
     internal Collider2D _currentPlatformCollider;
+    internal string _currentDoorId;
 
 
     private void Awake()

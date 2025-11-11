@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -11,9 +12,17 @@ public class GameManager : MonoBehaviour
 
     }// End of Awake
 
-    public void TakeTriggerInput(string doorsId)
+    public void TakeTriggerInput(string doorsId, bool keyE_Q) // Strign doorsId --> Id of the door to open, bool keyE_Q --> If true, open door with E key, if false, open door with Q key
     {
-        Debug.Log("Triggered door with ID: " + doorsId);
+        if (keyE_Q) // If E key is pressed
+        {
+            Debug.Log("E key pressed to open door with ID: " + doorsId);
+        }
+        else // If Q key is pressed
+        {
+            Debug.Log("Q key pressed to open door with ID: " + doorsId);
+        }
+
 
         switch (doorsId)
         {

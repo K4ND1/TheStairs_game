@@ -11,6 +11,10 @@ public class InputHandlingPlayer : MonoBehaviour
     internal float x_input_axis;
     internal float y_input_axis;
 
+    // Input flags
+    internal bool canOpenDoors = true;
+    
+
 
     private void Awake()
     {
@@ -34,6 +38,24 @@ public class InputHandlingPlayer : MonoBehaviour
         {
             Physics2D.IgnoreCollision(_parentScript._playerCollider, _parentScript._currentPlatformCollider, false);
         }
+
+        // Check for door opening input
+        if (canOpenDoors)
+        {
+            if (Input.GetKey(KeyCode.E))
+            {
+                canOpenDoors = false;
+                _parentScript._gameManager.TakeTriggerInput(_parentScript._currentDoorId, true);
+            }
+            else if (Input.GetKey(KeyCode.Q))
+            {
+                canOpenDoors = false;
+                _parentScript._gameManager.TakeTriggerInput(_parentScript._currentDoorId, false);
+            }
+        }
+
+
+
 
     }// End of InputAndFlagControll
 
