@@ -6,6 +6,8 @@ public class CollisionHandlingPlayer : MonoBehaviour
 {
     [SerializeField] private PlayerParentScript _parentScript;
 
+    [SerializeField] private SpriteRenderer _interactSign;
+
     // State Flags
     internal bool onStairs;
 
@@ -13,9 +15,15 @@ public class CollisionHandlingPlayer : MonoBehaviour
     private void Awake()
     {
         if (_parentScript == null) _parentScript = GetComponent<PlayerParentScript>();
+        if (_interactSign == null) _interactSign = gameObject.GetComponentInChildren<SpriteRenderer>();
 
     }// End of Awake
 
+    private void Start()
+    {
+        _interactSign.enabled = false;
+
+    }// End of Start
 
     // Method to get current platform collider
     internal Collider2D GetCurrentPlatformCollider()
@@ -77,9 +85,11 @@ public class CollisionHandlingPlayer : MonoBehaviour
     {
         if (other.CompareTag("Doors"))
         {
-            _parentScript._gameManager.TakeTriggerInput(other.gameObject.name);        
-        }
+            _parentScript._inputScript.canOpenDoors = true;
+            _parentScript._currentDoorId = other.name;
 
+            _interactSign.enabled = true;
+        }
     }// End of OnTriggerEnter2D
 
     private void OnTriggerStay2D(Collider2D other)
@@ -98,6 +108,14 @@ public class CollisionHandlingPlayer : MonoBehaviour
             // Reset vertical velocity when exiting stairs
             _parentScript._playerRb.velocity = new Vector2(_parentScript._playerRb.velocity.x, 0f);
             onStairs = false;  // Reset the flag when the player exits the stairs
+        }
+        
+        if (other.CompareTag("Doors"))
+        {
+            _parentScript._inputScript.canOpenDoors = false;
+            _parentScript._currentDoorId = null;
+
+            _interactSign.enabled = false;
         }
 
     }// End of OnTriggerExit2D
