@@ -12,7 +12,7 @@ public class InputHandlingPlayer : MonoBehaviour
     internal float y_input_axis;
 
     // Input flags
-    internal bool canOpenDoors = true;
+    internal bool canOpenDoors = false;
     
 
 
