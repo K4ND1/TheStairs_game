@@ -1,74 +1,54 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] internal DifferentDorrFunctions _doorsFuncs; // Reference to DifferentDorrFunctions script
 
-    private bool isInDoorScene = false; // Flag to check if the player is in a door scene
-    private string currentDoorSceneName = ""; // Store the current door scene name
+    private string MAIN_SCENE_NAME = "mainGame_scene"; // Name of the main scene
+
+    // Door scene script references
+    [SerializeField] internal Grandma_0_2 _g02;
+
+
+    internal string currentDoorsId = ""; // Store the current door id ( by game object name )
+    internal bool isInDoorScene = false; // Flag to check if the player is in a door scene
+
+    // Input handling variables
+    internal bool canPressEsc = false;
 
     private void Awake()
     {
-        if (_doorsFuncs == null) _doorsFuncs = GetComponent<DifferentDorrFunctions>();
+        // Get references to door scene scripts
+        if (_g02 == null) _g02 = GetComponent<Grandma_0_2>();
 
     }// End of Awake
 
-    public void TakeTriggerInput(string doorsId, bool keyE_Q) // Strign doorsId --> Id of the door to open, bool keyE_Q --> If true, open door with E key, if false, open door with Q key
+    private void Update()
     {
+        InputController();
+
+    }// End of Update
+
+    public void OpenGiven(string doorsId, bool keyE_Q) // Strign doorsId --> Id of the door to open, bool keyE_Q --> If true, open door with E key, if false, open door with Q key
+    {
+        Debug.Log("Opening door ID: " + doorsId);
+
         // E key --> open the door
         // Q key --> look through the peep hole
-
-        isInDoorScene = true; // Set the flag to true as we are in a door scene
-
         string inputKey = keyE_Q ? "E" : "Q"; // Determine the input key based on the boolean value
 
         // Switch case to call the appropriate door function based on the doorsId
         switch (doorsId)
         {
             case "0-2":
-                _doorsFuncs.OpenDoor_02(inputKey);
+                _g02.inThisScene = true;
+                SceneManager.LoadScene("0_2", LoadSceneMode.Single);
                 break;
 
-            case "1-1":
-                _doorsFuncs.OpenDoor_11(inputKey);
-                break;
-
-            case "1-2":
-                _doorsFuncs.OpenDoor_12(inputKey);
-                break;
-
-            case "2-3":
-                _doorsFuncs.OpenDoor_23(inputKey);
-                break;
-
-            case "3-1":
-                _doorsFuncs.OpenDoor_31(inputKey);
-                break;
-
-            case "5-2":
-                _doorsFuncs.OpenDoor_52(inputKey);
-                break;
-
-            case "5-3":
-                _doorsFuncs.OpenDoor_53(inputKey);
-                break;
-
-            case "7-1":
-                _doorsFuncs.OpenDoor_71(inputKey);
-                break;
-
-            case "7-3":
-                _doorsFuncs.OpenDoor_73(inputKey);
-                break;
-
-             case "9-3":
-                _doorsFuncs.OpenDoor_93(inputKey);
-                break;
-             
             default:
-                Debug.LogWarning("No door function found for ID: " + doorsId);
+                Debug.LogWarning("Couldn't find the door by the ID: " + doorsId);
                 break;
 
         }// End of switch
@@ -76,5 +56,63 @@ public class GameManager : MonoBehaviour
 
     }// End of TakeTriggerInput
 
+    private void CloseGiven(string doorsId)
+    {
+        isInDoorScene = false;
+        currentDoorsId = "";
+
+        switch (doorsId)
+        {
+            case "0-2":
+                _g02.inThisScene = false;
+                SceneManager.LoadScene(MAIN_SCENE_NAME, LoadSceneMode.Single);
+                break;
+
+            default:
+                Debug.LogWarning("Couldn't find the door by the ID: " + doorsId);
+                break;
+
+        }// End of switch
+    }
+
+    private void InputController()
+    {
+        // Handle input when in door scenes
+        if (isInDoorScene)
+        {
+            if (canPressEsc && Input.GetKey(KeyCode.Escape))
+            {
+                canPressEsc = false;
+                CloseGiven(currentDoorsId);
+            }
+        }
+
+    }// End of InputController
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene sceneLoaded, LoadSceneMode loadMode)
+    {
+        if (sceneLoaded.name == MAIN_SCENE_NAME)
+        {
+            // Reset door scene flags when returning to the main scene
+            isInDoorScene = false;
+            currentDoorsId = "";
+        }
+        else
+        {
+            isInDoorScene = true;
+            canPressEsc = true;
+            currentDoorsId = "0-2";
+        }
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
 
 }// End of GameManager class

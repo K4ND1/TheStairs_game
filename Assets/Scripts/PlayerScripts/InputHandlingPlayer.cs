@@ -45,12 +45,12 @@ public class InputHandlingPlayer : MonoBehaviour
             if (Input.GetKey(KeyCode.E))
             {
                 canOpenDoors = false;
-                _parentScript._gameManager.TakeTriggerInput(_parentScript._currentDoorId, true);
+                _parentScript._gameManager.OpenGiven(_parentScript._currentDoorId, true);
             }
             else if (Input.GetKey(KeyCode.Q))
             {
                 canOpenDoors = false;
-                _parentScript._gameManager.TakeTriggerInput(_parentScript._currentDoorId, false);
+                _parentScript._gameManager.OpenGiven(_parentScript._currentDoorId, false);
             }
         }
 
