@@ -85,8 +85,8 @@ public class CollisionHandlingPlayer : MonoBehaviour
     {
         if (other.CompareTag("Doors"))
         {
+            _parentScript.currentDoorId_OUTSIDE = other.name;
             _parentScript._inputScript.canOpenDoors = true;
-            _parentScript._currentDoorId = other.name;
 
             _interactSign.enabled = true;
         }
@@ -97,7 +97,9 @@ public class CollisionHandlingPlayer : MonoBehaviour
         if (other.CompareTag("Stairs"))
         {
             onStairs = true; // Set the flag to indicate the player is on stairs
+
         }
+
 
     }// End of OnTriggerStay2D
 
@@ -113,7 +115,7 @@ public class CollisionHandlingPlayer : MonoBehaviour
         if (other.CompareTag("Doors"))
         {
             _parentScript._inputScript.canOpenDoors = false;
-            _parentScript._currentDoorId = null;
+            _parentScript.currentDoorId_OUTSIDE = null;
 
             _interactSign.enabled = false;
         }
